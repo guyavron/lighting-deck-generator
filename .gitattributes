@@ -1,0 +1,3 @@
+# CSV files are written by Python's csv module, which ends lines with CRLF on every OS.
+# Checking them out with CRLF everywhere keeps a fresh clone unchanged after demo.py.
+*.csv text eol=crlf

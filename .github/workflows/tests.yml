@@ -16,15 +16,15 @@ jobs:
     env:
       PYTHONUTF8: "1"
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: ${{ matrix.python }}
       # The UI is one HTML file; a few tests run its JavaScript with node.
       # Without node those tests skip, so node is installed on purpose.
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
-          node-version: "20"
+          node-version: "22"
       - name: Install Python packages
         run: pip install -r requirements.txt
       # The photo bank (library/) is generated, not committed:

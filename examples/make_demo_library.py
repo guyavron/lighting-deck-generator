@@ -155,7 +155,7 @@ def build():
     write_csv(os.path.join(KN, "asset_hidden.csv"), ["asset_id", "hidden_by", "hidden_at", "reason"], [])
     write_csv(os.path.join(KN, "asset_crops.csv"), ["asset_id", "x", "y", "w", "h", "fixed_by", "fixed_at"], [])
     with open(os.path.join(KN, "asset_choices.csv"), "w", newline="", encoding="utf-8") as fh:
-        fh.write("category,asset_id,tags,chosen_at,source\n")
+        fh.write("category,asset_id,tags,chosen_at,source\r\n")   # CRLF, like the csv module
     return len(assets)
 
 

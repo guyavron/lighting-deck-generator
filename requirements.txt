@@ -1,0 +1,15 @@
+# Minimum versions. Tested on Linux (Python 3.10) and Windows (Python 3.14).
+fastapi>=0.141
+uvicorn>=0.30
+pydantic>=2.10
+python-multipart>=0.0.20
+ezdxf>=1.4.4
+numpy>=2.2
+pillow>=11.0
+python-pptx>=1.0.2
+PyYAML>=6.0
+# fills furniture in the plan; without it furniture stays as outlines
+scipy>=1.15
+# tests only
+pytest>=8.0
+httpx>=0.27

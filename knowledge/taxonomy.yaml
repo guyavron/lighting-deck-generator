@@ -1,0 +1,93 @@
+# טקסונומיית התאורה — מחולצת משמות קבוצות השכבות ב-5 קבצי PSD,
+# ומאומתת מול כותרות השקופיות ב-PPTX.
+#
+# ההיררכיה ב-PSD היא: קומה -> חדר -> סוג תאורה,
+# והיא תואמת בדיוק את מבנה הכותרת "חדר | קטגוריית תאורה | אופציה".
+
+hierarchy: [floor, room, lighting_type, option]
+
+floors: ["קרקע", "ראשונה", "מרתף", "גג"]
+
+rooms:
+  - "כניסה"
+  - "חלל ראשי"
+  - "חלל כפול"
+  - "משותפים"
+  - "סלון"
+  - "מטבח"
+  - "אי"
+  - "פינת אוכל"
+  - "ספריה"
+  - "חדר ילדים"
+  - "חדר שינה"
+  - "חדר מאסטר"
+  - "חדר ארונות"
+  - "חדר רחצה"
+  - "שירותי אורחים"
+  - "חדר כביסה"
+  - "פרגולה"
+  - "גינה"
+
+lighting_types:
+  # שני הסוגים האלה אינם בלוקים אלא גיאומטריה בשרטוט (D-024):
+  # פוליגון = פס לינארי, מעגל עם רדיוס = גוף שגודלו מצויר.
+  # `dxf_read` נותן להם את הקודים האלה כדי שיקבלו שם בעברית
+  # כמו כל גוף אחר, במקום להופיע כקוד גולמי.
+  - key: linear
+    he: "פס לינארי"
+    dxf_blocks: ["LINE"]
+  - key: inflated
+    he: "גוף מנופח"
+    dxf_blocks: ["CIRCLE"]
+  - key: recessed
+    he: "שקועים"
+    dxf_blocks: ["SH", "SH-DS"]
+  - key: spots
+    he: "ספוטים"
+    dxf_blocks: ["SP"]
+  - key: uplight
+    he: "אפלייט"
+  - key: joinery
+    he: "נגרות"
+    aliases: ["תחתית נגרות"]
+  - key: closets
+    he: "ארונות"
+  - key: wall
+    he: "קירי"
+    dxf_blocks: ["WA", "WA1", "GT-WA", "MA-WA", "TA", "TA1"]
+  - key: pendant
+    he: "תלוי"
+    aliases: ["תלוי פינת אוכל", "תלוי אי", "תלוי חלל כפול"]
+    dxf_blocks: ["SUS"]
+  - key: floor_lamp
+    he: "עמידה"
+  - key: table_lamp
+    he: "מנורות שולחניות"
+  - key: reading
+    he: "קריאה"
+  - key: bedside
+    he: "צידי מיטה"
+  - key: handrail
+    he: "מאחז יד"
+  - key: linear_system
+    he: "מערכת"
+    aliases: ["פרופיל"]
+    dxf_blocks: ["FOIL"]
+  - key: technical
+    he: "טכנית"
+  - key: mirror
+    he: "מראה"
+  - key: planting
+    he: "הארת צמחייה"
+    aliases: ["עץ", "עצים"]
+  - key: ambience
+    he: "אווירה"
+  - key: switching
+    he: "ניתוקים"
+  - key: section
+    he: "חתך"
+    note: "לא סוג גוף — תצוגת חתך, קנה מידה שונה ולכן הילה גדולה יותר"
+
+unknowns:
+  - "מיפוי DXF block -> lighting_type חלקי. לאמת מול גיא: TA, ZB, FL, RE, 659, AURA."
+  - "האם SH הוא תמיד 'שקועים' או שיש וריאנטים."

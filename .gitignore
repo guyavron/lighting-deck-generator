@@ -1,0 +1,22 @@
+# Generated at run time (examples/make_demo_library.py, the app, the tests)
+/library/
+/out/
+/DXF/
+/refcache/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+
+# Claude desktop app output folder
+Claude outputs/
+
+# Secrets
+.env
+.env.*
+
+# OS
+Thumbs.db
+desktop.ini
+.DS_Store

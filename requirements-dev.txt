@@ -1,0 +1,2 @@
+# Only needed to redraw the demo drawing: python demo.py --rebuild-dxf
+shapely>=2.0

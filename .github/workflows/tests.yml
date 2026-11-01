@@ -1,0 +1,33 @@
+name: tests
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    name: tests (${{ matrix.os }}, Python ${{ matrix.python }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        python: ["3.10", "3.12", "3.14"]
+    env:
+      PYTHONUTF8: "1"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      # The UI is one HTML file; a few tests run its JavaScript with node.
+      # Without node those tests skip, so node is installed on purpose.
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Install Python packages
+        run: pip install -r requirements.txt
+      # The photo bank (library/) is generated, not committed:
+      # tests/conftest.py builds it before the first test.
+      - name: Run tests
+        run: python -m pytest -rs

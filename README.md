@@ -34,7 +34,7 @@ For every project, the studio presents its lighting design to the client as a de
 Until now each deck was made by hand in Photoshop and PowerPoint:
 
 - **Big decks.** Counted on 5 of the studio's past decks: on average **49 content slides, 69 photos and 41 glowing fixtures per deck**.
-- **Slow.** About **7–8 hours per deck, and more** with rounds of corrections (an estimate; it was never timed).
+- **Slow.** About **7–9 hours per deck**, by the team's estimate, plus rounds of corrections (it was never timed).
 - **Repetitive.** The plan is already in the CAD drawing, and the fixtures are already marked in it. Yet each room was cropped, recoloured and lit by hand, and each photo was searched for again.
 
 The rule that shaped everything: **the output has to pass as the studio's own work.** A deck that looks "auto-generated" would not go to a client, however fast it was made.
@@ -114,7 +114,7 @@ Two lessons, both from sitting with a designer at the studio several times:
 
 - **Tested on a real project of 111 slides:** every action under a second, all 111 previews load in 27 s, and the export takes 10 s.
 - **A round of failure-focused testing found 22 bugs**, from mixed-up plans to a crash that left a broken deck. All are fixed, each with a test that failed before the fix.
-- **Honest status:** the tool is **not in use yet**. It will be rolled out at the studio together with the [lighting schedule tool](https://github.com/guyavron/lighting-schedule-automation). No deck made with it has gone to a client, so **there is no measured time saving**. The 7–8 hours above is the manual baseline it's meant to cut.
+- **Honest status:** the tool is **not in use yet**. It will be rolled out at the studio together with the [lighting schedule tool](https://github.com/guyavron/lighting-schedule-automation). No deck made with it has gone to a client, so **there is no measured time saving**. The 7–9 hours above is the manual baseline it's meant to cut.
 - `python demo.py` builds the fictional inputs and a 4-slide deck in under a minute.
 
 ## How I built it

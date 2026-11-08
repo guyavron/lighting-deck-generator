@@ -3,7 +3,8 @@
 <p align="center">
   <b>Turns a lighting plan drawn in CAD (DXF) into an editable PowerPoint deck that looks like the one the studio builds by hand,</b><br/>
   for an architectural lighting design studio. A web app in Hebrew that runs on the office computer: mark the rooms, choose what is lit, pick photos, export.<br/>
-  No AI while it runs: the output follows rules measured on the studio's own decks, kept in tables the studio can edit.
+  Built with AI, but no AI runs inside it: the output follows rules measured on the studio's own decks, kept in tables the studio can edit.<br/>
+  <sub>Built June–October 2026</sub>
 </p>
 
 <p align="center">
@@ -34,7 +35,7 @@ For every project, the studio presents its lighting design to the client as a de
 Until now each deck was made by hand in Photoshop and PowerPoint:
 
 - **Big decks.** Counted on 5 of the studio's past decks: on average **49 content slides, 69 photos and 41 glowing fixtures per deck**.
-- **Slow.** About **7–9 hours per deck**, by the team's estimate, plus rounds of corrections (it was never timed).
+- **Slow.** About **5–9 hours per deck** (depending on project size), by the team's estimate, plus rounds of corrections (it was never timed).
 - **Repetitive.** The plan is already in the CAD drawing, and the fixtures are already marked in it. Yet each room was cropped, recoloured and lit by hand, and each photo was searched for again.
 
 The rule that shaped everything: **the output has to pass as the studio's own work.** A deck that looks "auto-generated" would not go to a client, however fast it was made.
@@ -76,20 +77,20 @@ The rule behind the folder layout: **the studio's knowledge lives in tables, not
 | Decision | Why |
 |---|---|
 | **Every element is its own PowerPoint object**, not one flat image | The designer asked to be able to resize things at the end. The studio's old decks were flat images only because Photoshop works that way. The result looks exactly the same. |
-| **The designer marks the rooms; the computer only suggests** | How a floor is divided changes from project to project. Drawing a rectangle takes seconds, and a wrong automatic split costs more to fix than to draw. |
+| **The designer marks each room, and the slide shows exactly that** | How a floor is divided changes from project to project, and drawing a rectangle takes seconds. At first the slide was framed around the fixtures instead, and every slide lost its outer walls. |
 | **The glow was measured, not designed** | Instead of inventing a "nice glow", the settings of 229 glow effects in the studio's Photoshop files were read. They were all the same kind, so the tool copies exactly that. |
-| **Knowledge in tables, not in code** | The code was written with AI and may be rewritten. The tables are what survives a rewrite, and the studio can correct them. |
-| **What you cut is what you see** | At first a slide was framed around the fixtures, which sit 50–100 cm from the walls, so every slide lost its outer walls. Now the slide shows exactly the rectangle the designer drew, and the tool warns when a fixture is cut by the edge. |
+| **The studio's rules live in tables, not in code** | Layer names, fixture codes, glow strength and photo tags are in simple tables. The studio can correct a rule without a programmer, and the rules survive any change to the code. |
 | **Never overwrite, never delete** | Every export is a new file with the time in its name. Saving can't overwrite newer work. Nothing is lost without a person deciding. |
 | **Runs on the office computer** | Drawings are large client files and should not leave the office. It also needs no accounts or hosting for a small team. |
 
 ## Challenges & how they were solved
 
-**1. Two exports at the same time mixed up the plans**
+**1. Building for a designer, not for myself**
 
-- *What happened:* a deck for one project came out with the plan of another project. No error, no warning.
-- *Why:* both exports saved their temporary images under the same file names, so one overwrote the other.
-- *Fix:* every export gets its own file names. A test runs two exports at once; it failed before the fix. *Rejected:* allowing only one export at a time, because a second designer would just wait.
+I worked with a designer at the studio over several sessions. Two lessons shaped the tool:
+
+- **Measure before asking.** Questions like "how strong is the glow?" or "where does the plan go?" already had answers in the studio's past decks. Instead of guessing, I had them measured: 229 glow effects and the layout of 5 decks. The designer then judged the result by eye. The bar was "the studio accepts it", not a number.
+- **Check the data before building the feature.** The designer asked for the photo search to follow the lit fixtures. A check of the bank first showed that 216 of 417 photos had no fixture type yet, so a strict filter would have shown only 34 photos for a recessed ceiling. The tool uses a soft filter instead: photos of another type are hidden, and untagged ones appear below a line ("not tagged yet, may fit"). Result: 232 photos instead of 417, and no untagged photo was lost.
 
 **2. "Changing the line weight does nothing"**
 
@@ -100,21 +101,14 @@ The rule behind the folder layout: **the studio's knowledge lives in tables, not
 **3. A CAD file that lies about itself**
 
 - *What happened:* slides that were mostly empty paper, and far too many fixtures counted.
-- *Why:* in the real drawings, the size the file reports for itself was wrong by **up to 128 times**. The fixture legend was drawn far off to the side of the building, so it was counted as fixtures and stretched the drawing. The notes layer had a name like the lighting layers, so its 751 labels looked like fixtures. And Hebrew text came out scrambled in three different ways.
-- *Fix:* the tool ignores the size the file reports and measures the drawing itself, separates the legend by the gap next to the building, uses a fixed list of lighting layers, and fixes each kind of scrambled text. The demo drawing has every one of these traps on purpose, and the tests run on it.
-
-**4. The human challenge: the tool has to work the way the studio works**
-
-Two lessons, both from sitting with a designer at the studio several times:
-
-- **Measure before asking.** Questions like "how strong is the glow?" or "where does the plan go?" already have answers in the studio's past work. So the layout and glow were measured on old decks (the plan always starts at 4% of the width, the photos always end at 96%). The designer then judged the result by eye: the test is whether the studio accepts it, not a number.
-- **A filter that would have hidden half the photos.** The designer asked for the photo search to follow the fixtures that are lit. Before building it, the bank was checked: **216 of 417 photos had no fixture type yet**, so a strict filter on "recessed ceiling" would have left only **34**. The chosen design is a *soft* filter: a photo of a different type is hidden, but a photo with no type yet is shown below a line ("not tagged yet, may fit"). The filter can be switched off. Result: **232 photos instead of 417**, and no untagged photo disappeared.
+- *Why:* real drawings carry traps. The file reported its own size wrong by up to 128 times, and the fixture legend, drawn off to the side, was counted as fixtures.
+- *Fix:* the tool measures the drawing itself instead of trusting the file, and separates the legend and notes from real fixtures. The demo drawing contains every trap on purpose, and the tests run on it.
 
 ## Results
 
-- **Tested on a real project of 111 slides:** every action under a second, all 111 previews load in 27 s, and the export takes 10 s.
+- **Speed check on a real 111-slide project** (an automated run, not a designer's timing): the app responds to each click in under a second, all 111 previews load in 27 s, and the export takes 10 s.
 - **A round of failure-focused testing found 22 bugs**, from mixed-up plans to a crash that left a broken deck. All are fixed, each with a test that failed before the fix.
-- **Honest status:** the tool is **not in use yet**. It will be rolled out at the studio together with the [lighting schedule tool](https://github.com/guyavron/lighting-schedule-automation). No deck made with it has gone to a client, so **there is no measured time saving**. The 7–9 hours above is the manual baseline it's meant to cut.
+- **Status:** the tool is **not in use yet**. It will be rolled out at the studio together with the [lighting schedule tool](https://github.com/guyavron/lighting-schedule-automation). No deck made with it has gone to a client, so **there is no measured time saving**. The 5–9 hours above is the manual baseline it's meant to cut.
 - `python demo.py` builds the fictional inputs and a 4-slide deck in under a minute.
 
 ## How I built it
@@ -130,10 +124,10 @@ I built this with an **AI-assisted workflow: Claude wrote the code and the tests
 
 - **The first load of a large drawing is slow:** about 90–100 seconds, then about 35 the next time.
 - **Some fixture codes have no category yet** and show up as raw codes. The mapping is a table, so it's a data fix, not a code fix.
-- **The real photo bank (over 400 photos) hasn't been reviewed by eye yet.** Tags were filled in automatically only where there was clear evidence. Style and finish were left empty on purpose, because a wrong value waiting for approval tends to get approved.
+- **The real photo bank (417 photos) is waiting for the studio's review by eye.** Until then, tags were filled in automatically only where there was clear evidence. Style and finish were left empty on purpose, because a wrong value waiting for approval tends to get approved.
 - **The automatic room suggestions in step 1 are weak** (they mix floors, or stretch past the building). Whether to drop them is still open; the GIF starts with them removed.
 - **Not decided yet:** one shared computer for the office, or an install on each designer's computer.
-- **Next:** roll it out with the schedule tool, time the next real project, and decide the two open questions above.
+- **Next:** roll it out with the schedule tool and time the first real project.
 
 ## Tech stack
 
